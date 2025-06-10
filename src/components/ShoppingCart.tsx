@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { X, Minus, Plus, ShoppingCart as ShoppingCartIcon } from 'lucide-react';
+import { X, Minus, Plus, ShoppingCart as ShoppingCartIcon, Award } from 'lucide-react';
 import { Product } from './ProductCard';
 
 export interface CartItem extends Product {
@@ -23,6 +22,7 @@ const ShoppingCart = ({
   onRemoveItem,
 }: ShoppingCartProps) => {
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPoints = cartItems.reduce((sum, item) => sum + item.points * item.quantity, 0);
 
   if (!isOpen) return null;
 
@@ -56,7 +56,13 @@ const ShoppingCart = ({
                   />
                   <div className="flex-1">
                     <h3 className="font-medium text-sm">{item.name}</h3>
-                    <p className="text-sm text-muted-foreground">${item.price}</p>
+                    <div className="space-y-1">
+                      <p className="text-sm text-muted-foreground">${item.price}</p>
+                      <div className="flex items-center gap-1 text-xs">
+                        <Award className="h-3 w-3 text-amber-500" />
+                        <span className="text-amber-600">{item.points} pts</span>
+                      </div>
+                    </div>
                     <div className="flex items-center gap-2 mt-2">
                       <button
                         onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
@@ -90,8 +96,16 @@ const ShoppingCart = ({
 
         {cartItems.length > 0 && (
           <div className="border-t p-4">
-            <div className="flex justify-between items-center mb-4">
-              <span className="font-semibold">Total: ${total.toFixed(2)}</span>
+            <div className="space-y-2 mb-4">
+              <div className="flex justify-between items-center">
+                <span className="font-semibold">Total: ${total.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-1">
+                  <Award className="h-4 w-4 text-amber-500" />
+                  <span className="font-semibold text-amber-600">Or pay with {totalPoints} points</span>
+                </div>
+              </div>
             </div>
             <button className="w-full bg-primary text-primary-foreground py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium">
               Proceed to Checkout

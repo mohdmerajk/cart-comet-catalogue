@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Star, ShoppingCart, ArrowLeft } from 'lucide-react';
+import { Star, ShoppingCart, ArrowLeft, Award } from 'lucide-react';
 import { products } from '../data/products';
 import { Product } from '../components/ProductCard';
 
@@ -80,20 +79,37 @@ const ProductDetail = ({ onAddToCart }: ProductDetailProps) => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-3xl font-bold text-foreground">
-                  ${product.price}
-                </span>
-                {product.originalPrice && (
-                  <>
-                    <span className="text-xl text-muted-foreground line-through">
-                      ${product.originalPrice}
-                    </span>
-                    <span className="bg-destructive text-destructive-foreground px-2 py-1 text-sm font-semibold rounded">
-                      Save ${product.originalPrice - product.price}
-                    </span>
-                  </>
-                )}
+              <div className="space-y-4 mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl font-bold text-foreground">
+                    ${product.price}
+                  </span>
+                  {product.originalPrice && (
+                    <>
+                      <span className="text-xl text-muted-foreground line-through">
+                        ${product.originalPrice}
+                      </span>
+                      <span className="bg-destructive text-destructive-foreground px-2 py-1 text-sm font-semibold rounded">
+                        Save ${product.originalPrice - product.price}
+                      </span>
+                    </>
+                  )}
+                </div>
+                
+                <div className="flex items-center gap-2 text-lg">
+                  <Award className="h-5 w-5 text-amber-500" />
+                  <span className="font-bold text-amber-600">{product.points} reward points</span>
+                  {product.originalPoints && (
+                    <>
+                      <span className="text-muted-foreground line-through ml-2">
+                        {product.originalPoints} pts
+                      </span>
+                      <span className="bg-amber-100 text-amber-800 px-2 py-1 text-sm font-semibold rounded">
+                        Save {product.originalPoints - product.points} pts
+                      </span>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
 

@@ -1,13 +1,15 @@
 
 import React from 'react';
-import { Star, ShoppingCart } from 'lucide-react';
+import { Star, ShoppingCart, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export interface Product {
   id: number;
   name: string;
   price: number;
+  points: number;
   originalPrice?: number;
+  originalPoints?: number;
   image: string;
   rating: number;
   reviewCount: number;
@@ -66,27 +68,39 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
           <span className="text-sm text-muted-foreground">({product.reviewCount})</span>
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-foreground">${product.price}</span>
-            {product.originalPrice && (
-              <span className="text-sm text-muted-foreground line-through">
-                ${product.originalPrice}
+        <div className="space-y-2 mb-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-bold text-foreground">${product.price}</span>
+              {product.originalPrice && (
+                <span className="text-sm text-muted-foreground line-through">
+                  ${product.originalPrice}
+                </span>
+              )}
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-1 text-sm">
+            <Award className="h-4 w-4 text-amber-500" />
+            <span className="font-medium text-amber-600">{product.points} pts</span>
+            {product.originalPoints && (
+              <span className="text-muted-foreground line-through ml-1">
+                {product.originalPoints} pts
               </span>
             )}
           </div>
-          
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              onAddToCart(product);
-            }}
-            className="bg-primary text-primary-foreground px-3 py-1.5 rounded-md hover:bg-primary/90 transition-colors flex items-center gap-1 text-sm"
-          >
-            <ShoppingCart className="h-4 w-4" />
-            Add
-          </button>
         </div>
+        
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            onAddToCart(product);
+          }}
+          className="w-full bg-primary text-primary-foreground px-3 py-1.5 rounded-md hover:bg-primary/90 transition-colors flex items-center justify-center gap-1 text-sm"
+        >
+          <ShoppingCart className="h-4 w-4" />
+          Add to Cart
+        </button>
       </div>
     </div>
   );
