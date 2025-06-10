@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, Minus, Plus, ShoppingCart } from 'lucide-react';
+import { X, Minus, Plus, ShoppingCart as ShoppingCartIcon } from 'lucide-react';
 import { Product } from './ProductCard';
 
 export interface CartItem extends Product {
@@ -42,7 +42,7 @@ const ShoppingCart = ({
         <div className="flex-1 overflow-y-auto p-4">
           {cartItems.length === 0 ? (
             <div className="text-center py-8">
-              <ShoppingCart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <ShoppingCartIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <p className="text-muted-foreground">Your cart is empty</p>
             </div>
           ) : (
